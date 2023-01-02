@@ -1,0 +1,101 @@
+{
+  "version": "2",
+  "templates": [
+
+    {
+      "categories": ["DNS", "Tools"],
+      "description": "Duck DNS is a free service which will point a DNS (sub domains of duckdns.org) to an IP of your choice. The service is completely free, and doesn't require reactivation or forum posts to maintain its existence.",
+      "env": [
+        {
+          "label": "SUBDOMAINS",
+          "name": "SUBDOMAINS",
+          "set": ""
+        },
+        {
+          "label": "TOKEN",
+          "name": "TOKEN",
+          "set": ""
+        },
+        {
+          "default": "1000",
+          "label": "PUID",
+          "name": "PUID"
+        },
+        {
+          "default": "100",
+          "label": "PGID",
+          "name": "PGID"
+        }
+      ],
+      "image": "linuxserver/duckdns:latest",
+      "logo": "https://raw.githubusercontent.com/Qballjos/portainer_templates/master/Images/duckdns.png",
+      "name": "duckdns",
+      "note": "<b>Configuration</b></br>First, go to duckdns site, register your subdomain and retrieve your token<br/>Then run the docker create command above with your subdomain(s) and token<br/>It will update your IP with the DuckDNS service every 5 minutes",
+      "platform": "linux",
+      "restart_policy": "unless-stopped",
+      "title": "Duck DNS",
+      "type": 1
+    },
+
+    {
+      "categories": ["Web", "Proxy"],
+      "description": "Nginx is a web server with a strong focus on high concurrency, performance and low memory usage. It can also act as a reverse proxy server for HTTP, HTTPS, SMTP, POP3, and IMAP protocols, as well as a load balancer and an HTTP cache.",
+      "env": [
+        {
+          "default": "1000",
+          "label": "PUID",
+          "name": "PUID"
+        },
+        {
+          "default": "100",
+          "label": "PGID",
+          "name": "PGID"
+        }
+      ],
+      "image": "linuxserver/nginx:latest",
+      "logo": "https://raw.githubusercontent.com/Qballjos/portainer_templates/master/Images/nginx-icon.png",
+      "name": "nginx",
+      "platform": "linux",
+      "ports": ["80/tcp", "443/tcp"],
+      "restart_policy": "unless-stopped",
+      "title": "Nginx",
+      "type": 1,
+      "volumes": [
+        {
+          "bind": "/portainer/Files/AppData/Config/Nginx",
+          "container": "/config"
+        }
+      ]
+    },
+    {
+      "categories": ["Proxy", "Tools"],
+      "description": "Nginx Proxy Manager enables you to easily forward to your websites running at home or otherwise, including free SSL, without having to know too much about Nginx or Letsencrypt.",
+      "image": "jc21/nginx-proxy-manager",
+      "logo": "https://raw.githubusercontent.com/Qballjos/portainer_templates/master/Images/proxy_mgr.png",
+      "name": "nginx-proxy-manager",
+      "platform": "linux",
+      "env": [
+        {
+          "label": "DB_SQLITE_FILE",
+          "name": "DB_SQLITE_FILE",
+          "default": "/data/database.sqlite"
+        }
+      ],
+      "ports": ["80:80/tcp", "81:81/tcp", "443:443/tcp"],
+      "restart_policy": "unless-stopped",
+      "title": "Nginx Proxy Manager",
+      "type": 1,
+      "volumes": [
+        {
+          "bind": "/portainer/Files/AppData/Config/Nginx-Proxy/data",
+          "container": "/data"
+        },
+        {
+          "bind": "/portainer/Files/AppData/Config/Nginx-Proxy/letsencrypt",
+          "container": "/etc/letsencrypt"
+        }
+      ]
+    }
+
+  ]
+}
