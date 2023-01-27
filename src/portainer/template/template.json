@@ -172,6 +172,44 @@
           "container": "/var/run/docker.sock"
         }
       ]
+    },
+    {
+      "categories": [
+        "Speedtest",
+        "Updates",
+        "Cron",
+        "Tools"
+      ],
+      "description": "Speedtest Tracker is a self-hosted internet performance tracking application that runs speedtest checks against Ookla's Speedtest service.",
+      "image": "ghcr.io/alexjustesen/speedtest-tracker:latest",
+      "logo": "https://raw.githubusercontent.com/alexjustesen/speedtest-tracker/main/public/img/speedtest-tracker-icon.png",
+      "name": "speedtest-tracker",
+      "platform": "linux",
+      "env": [
+        {
+          "label": "PUID",
+          "name": "PUID",
+          "default": 1000
+        },
+        {
+          "label": "PGID",
+          "name": "PGID",
+          "default": 1000
+        }
+      ],
+      "ports": [
+        "8082:80/tcp",
+        "8432:443/tcp"
+      ],
+      "restart_policy": "unless-stopped",
+      "title": "Speedtest Tracker",
+      "type": 1,
+      "volumes": [
+        {
+          "bind": "/opt/speedtest-tracker/config",
+          "container": "/config"
+        }
+      ]
     }
   ]
 }
